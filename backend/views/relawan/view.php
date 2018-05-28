@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Relawan */
 
-$this->title = $model->id_relawan;
+$this->title = $model->nama;
 $this->params['breadcrumbs'][] = ['label' => 'Relawans', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -34,7 +34,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'email:email',
             'line',
             'instagram',
-            'agenda_id',
+            [
+                'attribute'=>'agenda_id',
+                'value'=>function($model){
+                    return $model->getAgenda();
+                }
+            ],
+            'tgl_daftar',
         ],
     ]) ?>
 

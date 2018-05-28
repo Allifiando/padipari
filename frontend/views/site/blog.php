@@ -41,7 +41,7 @@ $this->title = 'Blog Padi Pari';
                   </div>
                   <div class="meta-post">
                     <a href="#" class="author">By<br /><?php echo $key['penulis']?></a>
-                    <a href="#" class="date"><?php echo $key['create_at'] ?></a>
+                    <a href="#" class="date"><?php echo $key['tanggal_blog'] ?></a>
                   </div>
                   <div class="post-entry">
                     <p>
@@ -56,10 +56,14 @@ $this->title = 'Blog Padi Pari';
         <?php } ?>
 
             <div id="pagination">
-              <span class="all">Page 1 of 3</span>
-              <span class="current">1</span>
-              <a href="#" class="inactive">2</a>
-              <a href="#" class="inactive">3</a>
+              <span>Page <?= $_GET['id'];?> of <?= $blogCount;?></span>
+              <?php for ($i=1; $i <= $blogCount; $i++) { ?> 
+                <?php if($_GET['id'] == $i){ ?>
+                  <span class="current"><?= $i;?></span>
+                <?php } else { ?>
+                  <?= Html::a($i, ['site/blog', 'id'=>$i], ['class'=>'current']);?>
+                <?php } ?>
+              <?php } ?>
             </div>        
           </div>
           <div class="span4">

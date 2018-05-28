@@ -73,7 +73,7 @@ AppAsset::register($this);
                 <li><?php echo Html::a('Home', ['site/index']); ?></li>
                 <li><?php echo Html::a('Profil', ['site/profil']); ?></li>
                 <li><?php echo Html::a('Agenda', ['site/agenda', 'id'=>'1']); ?></li>
-                <li><?php echo Html::a('Blog', ['site/blog']); ?></li>
+                <li><?php echo Html::a('Blog', ['site/blog', 'id'=>'1']); ?></li>
                 <li><?php echo Html::a('Galeri', ['site/galeri']); ?></li>
                 <li><?php echo Html::a('Kontak', ['site/kontak']); ?></li>
               </ul>
@@ -116,7 +116,7 @@ AppAsset::register($this);
                 <li><?php echo Html::a('Home', ['site/index']); ?></li>
                 <li><?php echo Html::a('Profil', ['site/profil']); ?></li>
                 <li><?php echo Html::a('Agenda', ['site/agenda', 'id'=>'1']); ?></li>
-                <li><?php echo Html::a('Blog', ['site/blog']); ?></li>
+                <li><?php echo Html::a('Blog', ['site/blog', 'id'=>'1']); ?></li>
                 <li><?php echo Html::a('Galeri', ['site/galeri']); ?></li>
                 <li><?php echo Html::a('Kontak', ['site/kontak']); ?></li>
               </ul>

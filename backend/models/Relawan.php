@@ -17,6 +17,7 @@ use backend\models\Agenda;
  * @property string $line
  * @property string $instagram
  * @property integer $agenda_id
+ * @property integer $tgl_daftar
  */
 class Relawan extends \yii\db\ActiveRecord
 {
@@ -36,6 +37,7 @@ class Relawan extends \yii\db\ActiveRecord
         return [
             [['nama', 'no_telp', 'email', 'line', 'instagram', 'agenda_id'], 'required'],
             [['email'], 'email'],
+            [['tgl_daftar'], 'safe'],
             [['agenda_id'], 'integer'],
             [['nama'], 'string', 'max' => 20],
             [['no_telp'], 'string', 'max' => 15],
@@ -56,6 +58,7 @@ class Relawan extends \yii\db\ActiveRecord
             'line' => 'Line',
             'instagram' => 'Instagram',
             'agenda_id' => 'Agenda ID',
+            'tgl_daftar' => 'Tgl Daftar',
         ];
     }
 
@@ -63,5 +66,11 @@ class Relawan extends \yii\db\ActiveRecord
     {
         $data = Agenda::find()->all();
         return ArrayHelper::map($data, 'id_agenda', 'nama_agenda');
+    }
+
+    public function getAgenda()
+    {
+        $data = Agenda::find()->where(['id_agenda'=>$this->agenda_id])->one();
+        return $data->nama_agenda;
     }
 }

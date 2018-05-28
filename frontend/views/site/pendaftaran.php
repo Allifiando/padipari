@@ -13,7 +13,7 @@ $this->title = 'Pendaftaran Padi Pari';
         <div class="row">
           <div class="span4">
             <div class="inner-heading">
-              <h2>Pendfataran</h2>
+              <h2>Pendaftaran</h2>
             </div>
           </div>
           <div class="span8">
@@ -30,13 +30,13 @@ $this->title = 'Pendaftaran Padi Pari';
         <div class="row">
           <div class="span6">
             <h4>Pendaftaran Relawan Padi Pari</h4>
-            <?php $form = ActiveForm::begin(); ?>
+            <?php $form = ActiveForm::begin(['options'=>['id'=>'contactform']]); ?>
 
-            <?= $form->field($model, 'nama')?>
-            <?= $form->field($model, 'no_telp') ?>
-            <?= $form->field($model, 'email') ?>
-            <?= $form->field($model, 'line') ?>
-            <?= $form->field($model, 'instagram') ?>
+            <?= $form->field($model, 'nama')->textInput(['placeholder'=>'*enter your name'])?>
+            <?= $form->field($model, 'no_telp')->textInput(['placeholder'=>'*enter your number phone']) ?>
+            <?= $form->field($model, 'email')->textInput(['placeholder'=>'*enter your email']) ?>
+            <?= $form->field($model, 'line')->textInput(['placeholder'=>'*enter your ID line']) ?>
+            <?= $form->field($model, 'instagram')->textInput(['placeholder'=>'*enter your ID instaram']) ?>
 
             <div class="form-group">
                 <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
@@ -64,7 +64,6 @@ $this->title = 'Pendaftaran Padi Pari';
                     <p>
                       <?php echo $key['ket_agenda']?>
                     </p>
-                    <a href="#" class="btn btn-color">Read more <i class="icon-angle-right"></i></a>
                   </div>
                 </div>
               </div>

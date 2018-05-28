@@ -91,47 +91,46 @@ class SiteController extends Controller
 
     public function actionAgenda($id)
     {
-        if($id == '1'){
-            $blog = Blog::find()->all();
+        $blog = Blog::find()->all();
+        $agendaCount = Agenda::find()->count();
+
+        $jmlPage = 3;
+        if($id == 1) {
             $agenda = Agenda::find()
-            ->select("agenda.*, galeri.*")
-            ->leftJoin("galeri","galeri.id_galeri = agenda.id_galeri")
-            ->limit(3)
-            ->offset(0)
-            ->asArray()
-            ->all();    
+                ->select("agenda.*, galeri.*")
+                ->leftJoin("galeri","galeri.id_galeri = agenda.id_galeri")
+                ->limit($jmlPage)
+                ->offset(0)
+                ->asArray()
+                ->all();   
         }
-        elseif($id == '2'){
-            $blog = Blog::find()->all();
+        else {
             $agenda = Agenda::find()
-            ->select("agenda.*, galeri.*")
-            ->leftJoin("galeri","galeri.id_galeri = agenda.id_galeri")
-            ->limit(6)
-            ->offset(3)
-            ->asArray()
-            ->all();    
+                ->select("agenda.*, galeri.foto")
+                ->leftJoin("galeri","galeri.id_galeri = agenda.id_galeri")
+                ->limit($id*$jmlPage)
+                ->offset(($id-1)*$jmlPage)
+                ->asArray()
+                ->all();
         
         }
-
-// gaween manual ae ndo, jadi kalo semisal id 1 yo queryne iku lak 2 piro
-// limit karo offaet e di isi piye paham ga? jawaben ng kene ae
-//  cobaen ubah nomer e limit  , oikeku okeoke
-
-// paham lek iku , view ne aku sg bingung  , 
-// pke sekk ngene
               
-        return $this->render('agenda',['agenda'=>$agenda,'blog'=>$blog]);
+        return $this->render('agenda',[
+            'agenda'=>$agenda,
+            'blog'=>$blog, 
+            'agendaCount'=>ceil($agendaCount/$jmlPage)
+        ]);
     }
 
     public function actionAgendaview($id)
     {
         $blog = Blog::find()->all();        
         $model = Agenda::find()
-        ->select('agenda.*, galeri.*')
-        ->leftJoin('galeri','galeri.id_galeri = agenda.id_galeri')
-        ->where(['id_agenda'=>$id])
-        ->asArray()
-        ->one();;
+            ->select('agenda.*, galeri.*')
+            ->leftJoin('galeri','galeri.id_galeri = agenda.id_galeri')
+            ->where(['id_agenda'=>$id])
+            ->asArray()
+            ->one();;
         $agenda = Agenda::find()
             ->select("agenda.*, galeri.*")
             ->leftJoin("galeri","galeri.id_galeri = agenda.id_galeri")            
@@ -144,17 +143,18 @@ class SiteController extends Controller
     {
         $agenda = Agenda::find()->all();
         $blog = Blog::find()
-        ->select('blog.*, galeri.*')
-        ->leftJoin('galeri','galeri.id_galeri = blog.id_galeri')
-        ->where(['publish'=>'y'])
-        ->asArray()
-        ->all();        
+            ->select('blog.*, galeri.*')
+            ->leftJoin('galeri','galeri.id_galeri = blog.id_galeri')
+            ->where(['publish'=>'y'])
+            ->asArray()
+            ->all();        
         $model = Blog::find()
-        ->select('blog.*, galeri.*')
-        ->leftJoin('galeri','galeri.id_galeri = blog.id_galeri')
-        ->where(['id_blog'=>$id])
-        ->asArray()
-        ->one();
+            ->select('blog.*, galeri.*')
+            ->leftJoin('galeri','galeri.id_galeri = blog.id_galeri')
+            ->where(['id_blog'=>$id])
+            ->asArray()
+            ->one();
+
         return $this->render('blog-view',['key'=>$model,'blog'=>$blog,'agenda'=>$agenda]);
     }
 
@@ -177,6 +177,7 @@ class SiteController extends Controller
             $tabel->line = $model->line;
             $tabel->instagram = $model->instagram;
             $tabel->agenda_id = $agenda['id_agenda'];
+            $tabel->tgl_daftar = date('Y-m-d');
 
             if($tabel->save())
             {
@@ -190,16 +191,39 @@ class SiteController extends Controller
         
     }
 
-    public function actionBlog()
+    public function actionBlog($id)
     {
         $agenda = Agenda::find()->all();
-        $blog = Blog::find()
-        ->select('blog.*, galeri.*')
-        ->leftJoin('galeri','galeri.id_galeri = blog.id_galeri')
-        ->where(['publish'=>'y'])
-        ->asArray()
-        ->all();
-        return $this->render('blog',['blog'=>$blog,'agenda'=>$agenda]);
+        $blogCount = Blog::find()->where(['publish'=>'y'])->count();
+        
+        $jmlPage = 3;
+        if($id == 1) {
+            $blog = Blog::find()
+                ->select('blog.*, galeri.foto')
+                ->leftJoin('galeri','galeri.id_galeri = blog.id_galeri')
+                ->where(['publish'=>'y'])
+                ->limit($jmlPage)
+                ->offset(0)
+                ->asArray()
+                ->all();
+        }
+        else {
+            $blog = Blog::find()
+                ->select("blog.*, galeri.foto")
+                ->leftJoin("galeri","galeri.id_galeri = blog.id_galeri")
+                ->where(['publish'=>'y'])
+                ->limit($id*$jmlPage)
+                ->offset(($id-1)*$jmlPage)
+                ->asArray()
+                ->all();
+        
+        }
+
+        return $this->render('blog',[
+            'blog'=>$blog,
+            'agenda'=>$agenda, 
+            'blogCount'=>ceil($blogCount/$jmlPage)
+        ]);
     }
 
     public function actionGaleri()

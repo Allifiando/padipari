@@ -57,13 +57,14 @@ $this->title = 'Agenda Padi Pari';
            <?php }?>                  
         
             <div id="pagination">
-               <!-- <span class="all">Page 1 of 3</span>
-              <span class="current">1</span>
-              <!-- <a href="#" class="inactive">2</a>
-              <a href="#" class="inactive">3</a> -->
-             <?= Html::a('1', ['site/agenda', 'id'=>'1']);?>
-             <?= Html::a('2', ['site/agenda', 'id'=>'2']);?>
-             <!-- gantien petik ndo -->
+              <span>Page <?= $_GET['id'];?> of <?= $agendaCount;?></span>
+              <?php for ($i=1; $i <= $agendaCount; $i++) { ?> 
+                <?php if($_GET['id'] == $i){ ?>
+                  <span class="current"><?= $i;?></span>
+                <?php } else { ?>
+                  <?= Html::a($i, ['site/agenda', 'id'=>$i], ['class'=>'current']);?>
+                <?php } ?>
+              <?php } ?>
             </div>            
           </div>
           <div class="span4">

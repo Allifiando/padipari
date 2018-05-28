@@ -25,7 +25,7 @@ $this->title = 'Agenda Padi Pari';
       </div>
     </section>
 
-    <section id="content">
+    <section id="content" style="padding-top: 0px;">
       <div id="google-map" data-latitude="-7.317423" data-longitude="112.784205"></div>
       <div class="container">
         <div class="row">

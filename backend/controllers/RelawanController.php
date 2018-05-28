@@ -65,7 +65,9 @@ class RelawanController extends Controller
     {
         $model = new Relawan();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->tgl_daftar = date('Y-m-d');
+            $model->save();
             return $this->redirect(['view', 'id' => $model->id_relawan]);
         } else {
             return $this->render('create', [
